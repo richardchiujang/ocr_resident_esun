@@ -106,6 +106,12 @@ class MakePrediction(Resource):
             texts, cost = model_ocr.predict_ix0090ocr(origarr)
             print('result:{}.'.format(texts))
             texts = re.sub("[a-zA-Z0-9() ]",'',texts)
+            logstr = '{},{},{},{},{},{},{}\n'.format(int(time.time()), server_uuid, texts, esun_uuid, esun_timestamp, retry, imagestr)
+            # print(logstr)
+            f=open('./work/output/log.txt', 'a+', encoding='utf-8')
+            f.write(logstr)
+            f.close() 
+            print('write logs into logfile ok.')
 
             if len(texts) == 0:
                 out_res={"esun_uuid": esun_uuid,
